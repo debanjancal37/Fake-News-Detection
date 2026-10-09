@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TruthCheck | Fake News Detection</title>
+
+    <!-- Load the CSS stylesheet -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Website Header -->
+    <header class="header">
+        <div class="brand">TruthCheck</div>
+        <p>AI-Powered Fake News Detection</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <span class="tag">MACHINE LEARNING PROJECT</span>
+
+            <h1>Is This News <span>Real or Fake?</span></h1>
+
+            <p>
+                Enter a news headline and article below.
+                Our trained machine learning model will classify the text.
+            </p>
+        </section>
+
+        <!-- News Analysis Form -->
+        <section class="form-card">
+
+            <h2>Analyse a News Article</h2>
+
+            <p class="subtitle">
+                Provide the headline, article text, or both.
+            </p>
+
+            <form method="POST" action="/" id="newsForm">
+
+                <!-- News Title -->
+                <label for="news_title">News Title</label>
+
+                <input
+                    type="text"
+                    id="news_title"
+                    name="news_title"
+                    placeholder="Enter the news headline..."
+                    value="{{ news_title }}"
+                >
+
+                <!-- News Article -->
+                <label for="news_text">News Article Text</label>
+
+                <textarea
+                    id="news_text"
+                    name="news_text"
+                    rows="8"
+                    placeholder="Paste the news article here..."
+                >{{ news_text }}</textarea>
+
+                <!-- Character Counter -->
+                <div class="char-count">
+                    <span id="charCount">0 characters</span>
+                </div>
+
+                <!-- Form Buttons -->
+                <div class="button-group">
+
+                    <button
+                        type="submit"
+                        class="predict-btn"
+                        id="predictBtn"
+                    >
+                        Analyse News
+                    </button>
+
+                    <button
+                        type="button"
+                        class="clear-btn"
+                        id="clearBtn"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+            </form>
+
+            <!-- Input Validation Error -->
+            {% if error %}
+                <div class="result error-result">
+                    <h3>Input Required</h3>
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+
+            <!-- Prediction Result -->
+            {% if prediction %}
+
+                <div class="result
+                    {% if prediction == 'Fake News' %}
+                        fake-result
+                    {% elif prediction == 'Real News' %}
+                        real-result
+                    {% else %}
+                        error-result
+                    {% endif %}
+                ">
+
+                    <h3>Prediction Result</h3>
+
+                    <p class="prediction-label">
+                        {{ prediction }}
+                    </p>
+
+                    <!-- Dynamic prediction explanation -->
+                    <p class="disclaimer">
+                        {{ prediction_note }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="info-section">
+
+            <h2>How It Works</h2>
+
+            <div class="info-grid">
+
+                <div class="info-card">
+                    <h3>01. Input</h3>
+                    <p>
+                        Enter a news headline and article text
+                        for analysis.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>02. Process</h3>
+                    <p>
+                        TF-IDF converts the submitted text into
+                        numerical features.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>03. Predict</h3>
+                    <p>
+                        The Linear SVM model predicts whether
+                        the submitted text resembles fake or real
+                        news in its training data.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Disclaimer Section -->
+        <section class="info-section">
+            <div class="info-card">
+                <h3>Important Disclaimer</h3>
+                <p>
+                    Predictions are not proof that a news article
+                    is true or false. Always verify claims using
+                    credible and independent sources.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Website Footer -->
+    <footer>
+        <p>Fake News Detection | NLP &amp; Machine Learning Project</p>
+    </footer>
+
+    <!-- Load JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
